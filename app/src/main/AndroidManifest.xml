@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.libraryapp">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DISPLAYBOOKS"></activity>
+        <activity android:name=".barcodescan2"></activity>
+        <activity android:name=".barcodescan" />
+        <activity android:name=".DISPLAYBOOKS" />
         <activity android:name=".remove_bookss" />
         <activity android:name=".issued_bookss" />
         <activity android:name=".add_bookss" />
