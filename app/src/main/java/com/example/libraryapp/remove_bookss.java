@@ -3,6 +3,7 @@ package com.example.libraryapp;
         import android.content.Intent;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
+        import android.text.TextUtils;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
@@ -23,12 +24,17 @@ public class remove_bookss extends AppCompatActivity {
         code_remove=(EditText) findViewById(R.id.coderemove);
         deletee=(Button) findViewById(R.id.bookremove);
     }
-    public void deletebook(View view)
-    {
-        String bookidd=code_remove.getText().toString().trim();
-        DatabaseReference delbook= FirebaseDatabase.getInstance().getReference("books").child(bookidd);
-        delbook.removeValue();
-        Toast.makeText(this,"BOOK DELETED",Toast.LENGTH_LONG).show();
+    public void deletebook(View view) {
+
+        String bookidd = code_remove.getText().toString().trim();
+        if (TextUtils.isEmpty(bookidd)) {
+            Toast.makeText(this, "Please, enter the Book Code!", Toast.LENGTH_LONG).show();
+
+        } else {
+            DatabaseReference delbook = FirebaseDatabase.getInstance().getReference("books").child(bookidd);
+            delbook.removeValue();
+            Toast.makeText(this, "BOOK DELETED", Toast.LENGTH_LONG).show();
+        }
     }
     public void scancode(View view)
     {
