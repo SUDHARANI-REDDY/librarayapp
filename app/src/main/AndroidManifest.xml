@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".barcodescan2"></activity>
+        <activity android:name=".borrowbookactivity"></activity>
+        <activity android:name=".barcodescan2" />
         <activity android:name=".barcodescan" />
         <activity android:name=".DISPLAYBOOKS" />
         <activity android:name=".remove_bookss" />

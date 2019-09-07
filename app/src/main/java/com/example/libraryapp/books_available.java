@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.SearchView;
+import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +31,7 @@ public class books_available extends AppCompatActivity {
         setContentView(R.layout.activity_books_available);
         reference=FirebaseDatabase.getInstance().getReference().child("books");
         recyclerView=findViewById(R.id.rv);
-        searchView=(SearchView)findViewById(R.id.search_book);
+        searchView=findViewById(R.id.search_book);
     }
 
     @Override
@@ -78,11 +78,13 @@ public class books_available extends AppCompatActivity {
     private void search(String str){
         ArrayList<Bookstodb> Mylist=new ArrayList<>();
         for (Bookstodb object:list){
-            if (object.getBook_author().toLowerCase().contains(str.toLowerCase())||object.getBook_name().toLowerCase().contains((str.toLowerCase()))){
+            if (object.getBook_author().toLowerCase().contains(str.toLowerCase())||object.getBook_name().toLowerCase().contains((str.toLowerCase()))||object.getBookid().toLowerCase().contains(str.toLowerCase())){
                 Mylist.add(object);
             }
         }
         AdapterClass adapterClass=new AdapterClass(Mylist);
         recyclerView.setAdapter(adapterClass);
     }
+
+
 }

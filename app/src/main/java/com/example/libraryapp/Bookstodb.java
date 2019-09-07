@@ -8,6 +8,7 @@ public class Bookstodb {
     String book_author;
     String book_edition;
     String book_quantity;
+    String usn;
     Boolean issued;
     Date borrowed;
     Date due;
@@ -57,6 +58,7 @@ public class Bookstodb {
         return  due;
     }
 
-
-
+    public String getUsn() {
+        return usn;
+    }
 }
