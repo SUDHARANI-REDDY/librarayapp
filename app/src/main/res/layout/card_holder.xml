@@ -32,6 +32,11 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="sample"/>
+        <TextView
+            android:id="@+id/edition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"/>
 
         <TextView
             android:id="@+id/bookquantity"
@@ -39,6 +44,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="sample"/>
+
 
     </LinearLayout>
     <View

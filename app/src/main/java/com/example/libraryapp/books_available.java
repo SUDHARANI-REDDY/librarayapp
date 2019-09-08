@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
+import android.content.Context;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,6 +26,7 @@ public class books_available extends AppCompatActivity {
     ArrayList<Bookstodb> list;
     RecyclerView recyclerView;
     SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public class books_available extends AppCompatActivity {
         reference=FirebaseDatabase.getInstance().getReference().child("books");
         recyclerView=findViewById(R.id.rv);
         searchView=findViewById(R.id.search_book);
+
     }
 
     @Override
@@ -47,7 +50,7 @@ public class books_available extends AppCompatActivity {
                         for (DataSnapshot ds: dataSnapshot.getChildren()){
                             list.add(ds.getValue(Bookstodb.class));
                         }
-                        AdapterClass adapterClass=new AdapterClass(list);
+                        AdapterClass adapterClass=new AdapterClass(books_available.this,list);
                         recyclerView.setAdapter(adapterClass);
                     }
 
@@ -82,7 +85,7 @@ public class books_available extends AppCompatActivity {
                 Mylist.add(object);
             }
         }
-        AdapterClass adapterClass=new AdapterClass(Mylist);
+        AdapterClass adapterClass=new AdapterClass( books_available.this,Mylist);
         recyclerView.setAdapter(adapterClass);
     }
 

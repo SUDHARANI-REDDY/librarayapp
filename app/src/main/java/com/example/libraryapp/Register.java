@@ -76,11 +76,7 @@ public class Register extends AppCompatActivity {
 
                     return;
                 }
-                if((usn.length()!=10)||(usn.substring( 0,2 )!="1MV")||((usn.substring( 3,4 )!="16")&&(usn.substring( 3,4 )!="17")&&(usn.substring( 3,4 )!="18")&&(usn.substring( 3,4 )!="19")))
-                {
-                    toast.setText( " Invalid usn" );
-                    return;
-                }
+
                 FirebaseDatabase.getInstance().getReference( "usn" ).child( usn ).addListenerForSingleValueEvent( new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
