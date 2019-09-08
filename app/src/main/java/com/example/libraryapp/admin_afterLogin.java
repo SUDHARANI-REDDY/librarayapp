@@ -27,4 +27,10 @@ public class admin_afterLogin extends AppCompatActivity {
         Intent i = new Intent(this, issued_bookss.class);
         startActivity(i);
     }
+    public void issuebooks(View view)
+    {
+        Intent i = new Intent(this, issue_book.class);
+        startActivity(i);
+    }
+
 }

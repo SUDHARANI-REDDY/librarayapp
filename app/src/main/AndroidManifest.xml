@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Register"></activity>
+        <activity android:name=".issue_book"></activity>
+        <activity android:name=".Return" />
+        <activity android:name=".Register" />
         <activity android:name=".borrowbookactivity" />
         <activity android:name=".barcodescan2" />
         <activity android:name=".barcodescan" />
