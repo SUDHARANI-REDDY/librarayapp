@@ -2,14 +2,17 @@ package com.example.libraryapp;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,9 +25,10 @@ import java.util.Locale;
 
 public class borrowbookactivity extends AppCompatActivity {
 
-    TextView bookn,booki,booka,bookq,booke;
+    TextView bookn,booki,msg,booka,bookq,booke;
     Button borrow;
     DatabaseReference databasebooks;
+    int size=0;
     private FirebaseAuth mAuth;
     FirebaseUser user;
     String usn;
@@ -33,7 +37,7 @@ public class borrowbookactivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrowbookactivity);
-
+        msg=(TextView)findViewById(R.id.msg);
         bookn=(TextView)findViewById(R.id.bookname1);
         booki=(TextView)findViewById(R.id.bookid1);
         booka=(TextView)findViewById(R.id.author1);
@@ -64,8 +68,6 @@ public class borrowbookactivity extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 String userid = user.getUid();
                 usn = dataSnapshot.child(userid).child( "usn" ).getValue( String.class );
-
-
             }
 
             @Override
@@ -80,19 +82,63 @@ public class borrowbookactivity extends AppCompatActivity {
         borrow.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference ex = FirebaseDatabase.getInstance().getReference("borrow");
-
-                borrow newbook = new borrow(bookname,bookid,bookauthor,bookedition,date,usn);
-                ex.child(usn).child(bookid).setValue( newbook );
-                DatabaseReference y = FirebaseDatabase.getInstance().getReference("issued");
-                borrow issuebook = new borrow(bookname,bookid,bookauthor,bookedition,date,usn);
-                y.child(bookid).setValue( newbook );
-
-            }
+                FirebaseDatabase.getInstance().getReference( "borrow" ).child( usn ).addValueEventListener( new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        size=(int)dataSnapshot.getChildrenCount();
 
 
-        } );
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
 
+                   FirebaseDatabase.getInstance().getReference( "borrow" ).child( usn ).child( bookid ).addListenerForSingleValueEvent( new ValueEventListener() {
+                       @Override
+                       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                           if (dataSnapshot.exists()) {
+                               msg.setText( "Book is already borrowed" );
+                               return;
+
+                           } else {
+                               if (size < 3) {
+                                   DatabaseReference ex = FirebaseDatabase.getInstance().getReference( "borrow" );
+                                   borrow newbook = new borrow( bookname, bookid, bookauthor, bookedition, date, usn );
+                                   ex.child( usn ).child( bookid ).setValue( newbook );
+
+                                   msg.setText( "Book borrowed" );
+                                   DatabaseReference y = FirebaseDatabase.getInstance().getReference( "issued" );
+                                   borrow issuebook = new borrow( bookname, bookid, bookauthor, bookedition, date, usn );
+                                   y.push().child( bookid ).setValue( issuebook );
+                               } else {
+
+                                   msg.setText( "3 Books  borrowed" );
+                                  return;
+
+
+                               }
+                           }
+                       }
+
+                       @Override
+                       public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                       }
+                   } );
+
+
+
+               }
+
+
+
+
+
+});
     }
 }
+

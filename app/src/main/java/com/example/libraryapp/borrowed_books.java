@@ -34,7 +34,7 @@ public class borrowed_books extends AppCompatActivity {
     ArrayList<String> list;
     TextView tb;
     ArrayAdapter<String> adapter;
-
+TextView no;
 
 
 
@@ -48,7 +48,7 @@ public class borrowed_books extends AppCompatActivity {
         final String usn=intent.getStringExtra("usn");
 
         list = new ArrayList<>();
-
+no=(TextView)findViewById( R.id.no );
         listview = findViewById(R.id.listview2);
         adapter = new ArrayAdapter<String>(this, R.layout.layout,R.id.textView5, list);
 
@@ -58,6 +58,8 @@ public class borrowed_books extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
+                int count= (int) dataSnapshot.getChildrenCount();
+                no.setText( "Borrowed Books"+count );
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
 
