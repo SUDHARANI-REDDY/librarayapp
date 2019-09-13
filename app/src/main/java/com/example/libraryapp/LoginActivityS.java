@@ -79,6 +79,7 @@ public class LoginActivityS extends AppCompatActivity {
 
                                 } else {
                                     // If sign in fails, display a message to the user.
+                                    Toast.makeText(getApplicationContext(),"email or password incorrect",Toast.LENGTH_LONG).show();
 
                                 }
 
